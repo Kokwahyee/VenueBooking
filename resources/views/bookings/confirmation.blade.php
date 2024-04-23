@@ -1,4 +1,4 @@
-<!-- confirmation.blade.php -->
+<!-- Confirmation page-->
 
 <x-app-layout>
     <x-slot name="header">
