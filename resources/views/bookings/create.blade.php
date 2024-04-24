@@ -49,25 +49,17 @@
                                 <x-input id="date" class="block mt-1 w-full flatpickr" type="text" name="date" value="{{ date('Y-m-d') }}" required />
                             </div>
                             
-                            <div class="mt-4">
-                                <x-label for="time" :value="__('Timeslot')" />
-                            
-                                <div class="grid grid-cols-3 gap-4 mt-2">
-                                    @foreach($timeSlots as $timeSlot)
-                                    <div>
-                                        <label class="inline-flex items-center">
-                                            <input type="checkbox" name="time[]" value="{{ $timeSlot }}" class="form-checkbox h-5 w-5 text-indigo-600">
-                                            <span class="ml-2 text-gray-700">{{ $timeSlot }}</span>
-                                        </label>
-                                    </div>
-                                    @endforeach
+                            <div class="grid grid-cols-3 gap-4 mt-2">
+                                @foreach($timeSlots as $timeSlot)
+                                <div>
+                                    <label class="inline-flex items-center">
+                                        <input type="checkbox" name="time[]" value="{{ $timeSlot }}" class="form-checkbox h-5 w-5 text-indigo-600" {{ in_array($timeSlot, $bookedTimeSlots) ? 'disabled' : '' }}>
+                                        <span class="ml-2 text-gray-700">{{ $timeSlot }}</span>
+                                    </label>
                                 </div>
+                                @endforeach
                             </div>
                             
-                            
-                            
-                            
-
                         </div>
                     </div>
 

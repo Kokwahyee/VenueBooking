@@ -45,8 +45,8 @@ Route::put('/venue/{venue}', [VenueController::class, 'update'])->name('venue.up
 Route::delete('/venue/{venue}', [VenueController::class, 'destroy'])->name('venue.destroy'); // Delete Venue
 
 Route::get('/booking/create/{venue}', [BookingController::class, 'create'])->name('booking.create');
-Route::post('/bookings', [BookingController::class, 'store'])->name('booking.store');
-Route::get('/bookings/confirmation/{id}', [BookingController::class, 'confirmation'])->name('booking.confirmation');
+Route::post('/bookings', [BookingController::class, 'store'])->name('bookings.store');
+Route::get('/bookings/getTimeSlots', [BookingController::class, 'getTimeSlots'])->name('bookings.getTimeSlots');
+Route::get('/bookings/confirmation/{id}', [BookingController::class, 'confirmation'])->name('bookings.confirmation');
 Route::get('/bookings', [BookingController::class, 'index'])->name('booking.index');
-
 

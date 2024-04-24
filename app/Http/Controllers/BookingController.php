@@ -38,9 +38,31 @@ class BookingController extends Controller
             // Add more time slots as needed
         ];
 
-        // Pass the venue object and time slots to the booking form view
-        return view('bookings.create', compact('venue', 'timeSlots'));
+        // Retrieve booked time slots for the selected venue on the selected date
+        $bookedTimeSlots = Booking::where('venue_id', $venue->id)
+                                    ->whereDate('date', $request->date)
+                                    ->pluck('time_slots')
+                                    ->flatten()
+                                    ->toArray();
+
+        // Pass the venue object, time slots, and booked time slots to the booking form view
+        return view('bookings.create', compact('venue', 'timeSlots', 'bookedTimeSlots'));
     }
+
+    public function getTimeSlots(Request $request)
+{
+    // Retrieve booked time slots for the selected date
+    $bookedTimeSlots = Booking::whereDate('date', $request->date)
+                                ->pluck('time_slots')
+                                ->flatten()
+                                ->toArray();
+    
+    // Log the booked time slots
+    \Log::info($bookedTimeSlots);
+
+    return response()->json($bookedTimeSlots);
+}
+
 
    // Method to store a new booking
 public function store(Request $request)

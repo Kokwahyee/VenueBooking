@@ -1,36 +1,39 @@
 <x-app-layout>
+    <x-slot name="header">
+        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+            {{ __('Venue') }}
+        </h2>
+    </x-slot>
 
-    <div class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
-        <h2 class="text-lg font-semibold">Booking Management</h2><br>
-
-        <!-- Booking Table -->
-        <div class="overflow-x-auto">
-            <table class="table-auto w-full border-collapse border border-gray-400">
-                <thead>
-                    <tr class="bg-gray-200">
-                        <th class="px-4 py-2">Venue</th>
-                        <th class="px-4 py-2">Date</th>
-                        <th class="px-4 py-2">Timeslots</th>
-                        <th class="px-4 py-2">Booked By</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @unless($bookings->isEmpty())
-                        @foreach ($bookings as $booking)
-                            <tr class="hover:bg-gray-100">
-                                <td class="border px-4 py-2">{{ $booking->venue->venue_title }}</td>
-                                <td class="border px-4 py-2">{{ $booking->date }}</td>
-                                <td class="border px-4 py-2">{{ implode(', ', json_decode($booking->time_slots)) }}</td>
-                                <td class="border px-4 py-2">{{ $booking->user->email }}</td>
-                            </tr>
-                        @endforeach
-                    @else
-                        <tr>
-                            <td colspan="4" class="border px-4 py-2">No bookings found</td>
-                        </tr>
-                    @endunless
-                </tbody>
-            </table>
+    <div class="py-3">
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            @include('partials._search')<br>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4"> <!-- Changed from 2 to 3 columns -->
+                @unless($venues->isEmpty())
+                    @foreach ($venues as $venue)
+                    <div class="col-md-4" style="position: relative;"> <!-- Added position: relative -->
+                        <div class="bg-white shadow-md rounded-lg p-6" style="position: relative;"> <!-- Added position: relative -->
+                            <h2 class="text-lg font-semibold">{{ $venue->venue_title }}</h2>
+                            <div class="mt-1 text-sm">
+                                <p>{{ $venue->venue_description }}</p>
+                                <p>{{ $venue->venue_location }}</p>
+                            </div>
+                            <div class="mt-1 border-t pt-1 text-xs text-gray-500">
+                                <a href="{{ route('booking.create', ['venue' => $venue->id]) }}" class="inline-block bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                                    Book
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    @endforeach
+                @else
+                    <p>No venues found</p>
+                @endunless
+            </div>
+            <div class="mt-2"> <!-- Reduced margin top -->
+                {{ $venues->links() }}
+            </div>
         </div>
     </div>
+    <x-flash-message />
 </x-app-layout>
