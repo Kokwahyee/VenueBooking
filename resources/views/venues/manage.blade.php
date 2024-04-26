@@ -2,7 +2,7 @@
 
     <div class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
         <h2 class="text-lg font-semibold">Venue Management</h2><br>
-        <a href="{{ route('venue_create') }}">
+        <a href="{{ route('venue.create') }}">
             <x-button>
                 {{ __('Add') }}
             </x-button>
@@ -28,10 +28,10 @@
                         <td class="border px-4 py-2">{{ $venue->venue_location }}</td>
                         <td class="border px-4 py-2">
                             <!-- Edit button -->
-                        <a href="{{ route('venues.edit', $venue->id) }}" class="text-blue-500 hover:text-blue-700 mr-2 px-4 py-2 rounded-md bg-blue-100 hover:bg-blue-200 transition-colors duration-300">Edit</a>
+                        <a href="{{ route('venue.edit', $venue->id) }}" class="text-blue-500 hover:text-blue-700 mr-2 px-4 py-2 rounded-md bg-blue-100 hover:bg-blue-200 transition-colors duration-300">Edit</a>
 
                         <!-- Delete button -->
-                        <form method="POST" action="{{ route('venues.destroy', $venue->id) }}" class="inline">
+                        <form method="POST" action="{{ route('venue.destroy', $venue->id) }}" class="inline">
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="text-red-500 hover:text-red-700 px-4 py-2 rounded-md bg-red-100 hover:bg-red-200 transition-colors duration-300">Delete</button>
