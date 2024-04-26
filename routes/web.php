@@ -35,7 +35,7 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']
 
 Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified'])
     ->get('/venue/manage', [VenueController::class, 'manage'])
-    ->name('venue_manage');
+    ->name('venue.manage');
 
 Route::get('/venue/create', [VenueController::class, 'create'])->name('venue.create');
 Route::post('/venue', [VenueController::class, 'store'])->name('venue.store'); // Store Venue

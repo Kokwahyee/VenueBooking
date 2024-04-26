@@ -49,7 +49,7 @@ class VenueController extends Controller
 
         Venue::create($formFields);
 
-        return redirect('/venue_manage')->with('message', 'Venue Created Successfully!');
+        return redirect('venue.manage')->with('message', 'Venue Created Successfully!');
     }
     
     //Show Edit form
