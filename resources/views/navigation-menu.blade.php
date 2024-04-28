@@ -36,8 +36,8 @@
                             <x-dropdown-link :href="route('venue')" :active="request()->routeIs('venue')">
                                 {{ __('Venue List') }}
                             </x-dropdown-link>
-                            <x-dropdown-link :href="route('venue_manage')" :active="request()->routeIs('venue_manage')">
-                                {{ __('Venue Management.') }}
+                            <x-dropdown-link :href="route('venue.manage')" :active="request()->routeIs('venue.manage')">
+                                {{ __('Venue Management') }}
                             </x-dropdown-link>
                             <!-- Add more dropdown links here if needed -->
                         </x-slot>
