@@ -1,0 +1,210 @@
+* {
+    font-family: 'Times New Roman', serif;
+}
+
+body {
+    background-color: rgb(52, 215, 210);
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    background-color: #19578e;
+    color: #fff;
+    padding: 10px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+a:hover {
+    background-color: #021b316e;
+    color: white;
+}
+
+nav {
+    align-content: center;
+    margin-left: 15px;
+}
+
+nav ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+nav ul li {
+    display: inline;
+    margin-right: 20px;
+}
+
+nav ul li a {
+    padding: 12px;
+    text-decoration: none;
+    color: #fff;
+    font-weight: bold;
+}
+
+nav ul li ul.dropdown {
+    display: none;
+    position: absolute;
+    background-color: #fff;
+    border: 1px solid #ccc;
+}
+
+nav ul li:hover ul.dropdown {
+    display: block;
+}
+
+nav ul li ul.dropdown li {
+    display: block;
+    background: #0d4787;
+    padding: 10px;
+    display: block;
+}
+
+.hero {
+    /*background-image: url('background.jpg');*/
+    background-size: cover;
+    background-position: center;
+    color: #fff;
+    text-align: center;
+    padding: 100px 20px;
+}
+
+.search-bar {
+    margin-top: 20px;
+}
+
+.featured-venues {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 50px;
+}
+
+.venue-card {
+    width: 250px;
+    border: 3px solid #022a57c1;
+    border-radius: 5px;
+    overflow: hidden;
+    margin: 0 10px;
+}
+
+.venue-card img {
+    border: inset;
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+}
+
+.venue-card-content {
+    background-color: rgb(7, 84, 111);
+    padding: 15px;
+    border: outset;
+}
+
+.venue-card-content h3 {
+    margin: 0;
+}
+
+footer {
+    background-color: #19578e;
+    color: #fff;
+    text-align: center;
+    padding: 20px 0;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
+
+.login-register {
+    margin-left: auto;
+}
+
+.search-bar {
+    height: 70px;
+    padding: 5px;
+    background-color: rgba(128, 128, 128, 0.401);
+}
+
+/* Responsive Styles */
+@media only screen and (max-width: 768px) {
+    header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    .login-register {
+        margin-top: 10px;
+        margin-left: 0;
+    }
+    .search-bar input {
+        width: 100%;
+    }
+}
+
+.btn-login:hover,
+.btn-register:hover,
+.btn-booking:hover {
+    color: white;
+    background-color: rgb(0, 145, 255);
+}
+
+.input-search {
+    border-radius: 25px;
+    float: none;
+    padding: 6px;
+    border: none;
+    margin-top: 8px;
+    margin-right: 16px;
+    font-size: 17px;
+    width: 80%;
+    height: 34px;
+}
+
+.btn-search {
+    border-color: #19578e;
+    height: 35px;
+    width: 70px;
+    color: white;
+    background-color: rgb(53, 173, 243);
+}
+
+.btn-search:hover {
+    background-color: rgb(4, 58, 90);
+}
+
+.btn-booking {
+    border-color: black;
+    color: black;
+    background-color: #ffffff;
+    border: none;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+}
+
+.btn-login,
+.btn-register {
+    color: black;
+    background-color: #ffffff;
+    border: none;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+}
+
+/*------DASHBOARD-----------*/
+.profile {
+    margin-right: 0%;
+    background-color: rgb(255, 255, 254);
+    display: flex;
+}

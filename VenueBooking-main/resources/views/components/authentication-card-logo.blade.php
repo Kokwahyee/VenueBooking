@@ -1,0 +1,1 @@
+<img src="{{ asset('/logo/Venue_logo.png') }}" alt="Venue Logo">
