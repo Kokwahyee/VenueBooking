@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('venue_title');
             $table->string('venue_description');
             $table->string('venue_location');
+            $table->string('venue_image')->nullable();
             $table->timestamps();
         });
     }

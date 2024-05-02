@@ -10,7 +10,7 @@ class Venue extends Model
     use HasFactory;
 
     protected $table = "venues";
-    protected $fillable =['venue_title','venue_description', 'venue_location'];
+    protected $fillable =['venue_title','venue_description', 'venue_location','venue_image'];
 
     public function scopeFilter($query, array $filters) {
         if($filters['search'] ?? false) {

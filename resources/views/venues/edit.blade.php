@@ -8,7 +8,7 @@
     <div class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
         <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
             <div class="p-6 sm:px-20 bg-white border-b border-gray-200">
-                <form method="POST" action="{{ route('venues.update', $venue->id) }}">
+                <form method="POST" action="{{ route('venues.update', $venue->id) }}"enctype="multipart/form-data">
                     @csrf
                     @method('PUT')
 
@@ -31,6 +31,12 @@
                         <x-label for="venue_location" :value="__('Location')" />
 
                         <x-input id="venue_location" class="block mt-1 w-full" type="text" name="venue_location" required value="{{ $venue->venue_location }}" />
+                    </div>
+
+                    <!-- Venue Images -->
+                    <div class="mb-3">
+                        <label>Upload File/Image</label>
+                        <input type="file" name="venue_image" class="form-control" />
                     </div>
 
                     <div class="flex items-center justify-end mt-4">
