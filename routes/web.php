@@ -36,7 +36,7 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']
 Route::get('/venue/create', [VenueController::class, 'create'])->name('venue.create');
 Route::get('/venue_manage', [VenueController::class, 'manage'])->name('venue.manage'); // Changed route definition
 Route::post('/venue', [VenueController::class, 'store'])->name('venue.store'); // Store Venue
-
+Route::get('/venue/{venue}', [VenueController::class, 'show'])->name('venue.show');
 Route::get('/venue/{venue}/edit', [VenueController::class, 'edit'])->name('venue.edit');
 Route::put('/venue/{venue}', [VenueController::class, 'update'])->name('venue.update');
 Route::delete('/venue/{venue}', [VenueController::class, 'destroy'])->name('venue.destroy'); // Delete Venue

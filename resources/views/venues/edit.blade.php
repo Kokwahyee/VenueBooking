@@ -8,7 +8,7 @@
     <div class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
         <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
             <div class="p-6 sm:px-20 bg-white border-b border-gray-200">
-                <form method="POST" action="{{ route('venues.update', $venue->id) }}"enctype="multipart/form-data">
+                <form method="POST" action="{{ route('venue.update', $venue->id) }}"enctype="multipart/form-data">
                     @csrf
                     @method('PUT')
 

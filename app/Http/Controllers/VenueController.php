@@ -16,13 +16,13 @@ class VenueController extends Controller
         ]);
     }
 
-    // Show single venue
-    public function show(Venue $venue)
+    public function show($id)
     {
-        return view('venues.show', [
-            'venue' => $venue
-        ]);
+        $venue = Venue::findOrFail($id); // Assuming Venue is your model
+
+        return view('venues.show', compact('venue'));
     }
+
 
     // Show create form
     public function create()
@@ -103,7 +103,7 @@ public function store(Request $request)
                     'venue_image' => $path . $filename,
                 ]);
 
-                return redirect()->route('venue.index')->with('message', 'Venue Updated Successfully!');
+                return redirect()->route('venue.manage')->with('message', 'Venue Updated Successfully!');
             } else {
                 // Handle invalid file
                 return redirect()->back()->withInput()->withErrors(['venue_image' => 'Invalid file uploaded']);
@@ -117,7 +117,7 @@ public function store(Request $request)
             'venue_location' => $formFields['venue_location'],
         ]);
 
-        return redirect()->route('venue.index')->with('message', 'Venue Updated Successfully!');
+        return redirect()->route('venue.manage')->with('message', 'Venue Updated Successfully!');
     }
 
     // Delete venue
@@ -129,7 +129,7 @@ public function store(Request $request)
         }
 
         $venue->delete();
-        return redirect()->route('venue.index')->with('message', 'Venue Deleted Successfully!');
+        return redirect()->route('venue.manage')->with('message', 'Venue Deleted Successfully!');
     }
 
     // Manage venues
@@ -140,4 +140,5 @@ public function store(Request $request)
             'venues' => Venue::paginate(10)
         ]);
     }
+    
 }
