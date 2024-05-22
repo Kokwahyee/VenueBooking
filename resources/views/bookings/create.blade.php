@@ -51,14 +51,14 @@
                             
                             <div class="grid grid-cols-3 gap-4 mt-2">
                                 @foreach($timeSlots as $timeSlot)
-                                <div>
+                                  <div>
                                     <label class="inline-flex items-center">
-                                        <input type="checkbox" name="time[]" value="{{ $timeSlot }}" class="form-checkbox h-5 w-5 text-indigo-600" {{ in_array($timeSlot, $bookedTimeSlots) ? 'disabled' : '' }}>
-                                        <span class="ml-2 text-gray-700">{{ $timeSlot }}</span>
+                                      <input type="checkbox" name="time[]" value="{{ $timeSlot }}" class="form-checkbox h-5 w-5 text-indigo-600">
+                                      <span class="ml-2 text-gray-700">{{ $timeSlot }}</span>
                                     </label>
-                                </div>
+                                  </div>
                                 @endforeach
-                            </div>
+                              </div>
                             
                         </div>
                     </div>
@@ -74,3 +74,52 @@
     </div>
 </x-app-layout>
 
+<script>
+    flatpickr('.flatpickr', {
+        dateFormat: 'Y-m-d', // Set the date format
+        enableTime: false, // Disable time selection
+        minDate: 'today', // Set the minimum selectable date to today
+    });
+
+    $(document).ready(function() {
+        $('#time').select2();
+    });
+
+    $('#date').change(function () {
+        var venueId = {{ $venue->id }};
+        var selectedDate = $(this).val();
+
+        // Send AJAX request to fetch booked time slots for the selected date
+        $.ajax({
+            url: '{{ route("bookings.getTimeSlots") }}',
+            method: 'GET',
+            data: { date: selectedDate,venue_id: venueId},
+            success: function (response) {
+                // Log the response
+                console.log('Response:', response);
+
+                // Clear all checkboxes before updating with the new response
+                $('input[type="checkbox"]').prop('checked', false).prop('disabled', false);
+
+                // Iterate through each element of the response array
+                response.forEach(function (element) {
+                    // Parse the JSON array within the string
+                    var bookedTimeSlots = JSON.parse(element);
+
+                    // Log the booked time slots
+                    console.log('Booked Time Slots:', bookedTimeSlots);
+
+                    // Disable booked time slots checkboxes
+                    bookedTimeSlots.forEach(function (timeSlot) {
+                        console.log('Disabling time slot:', timeSlot);
+                        $('input[type="checkbox"][value="' + timeSlot + '"]').prop('disabled', true);
+                    });
+                });
+            },
+            error: function (xhr, status, error) {
+                console.error(xhr.responseText);
+            }
+        });
+    });
+
+</script>

@@ -52,7 +52,8 @@ class BookingController extends Controller
     public function getTimeSlots(Request $request)
 {
     // Retrieve booked time slots for the selected date
-    $bookedTimeSlots = Booking::whereDate('date', $request->date)
+    $bookedTimeSlots = Booking::where('venue_id', $request->venue_id)
+                                ->whereDate('date', $request->date)
                                 ->pluck('time_slots')
                                 ->flatten()
                                 ->toArray();
