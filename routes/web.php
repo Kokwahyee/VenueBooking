@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\VenueController;
 use App\Http\Controllers\BookingController;
+use App\Http\Controllers\CommentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -46,3 +47,8 @@ Route::post('/bookings', [BookingController::class, 'store'])->name('bookings.st
 Route::get('/bookings/getTimeSlots', [BookingController::class, 'getTimeSlots'])->name('bookings.getTimeSlots');
 Route::get('/bookings/confirmation/{id}', [BookingController::class, 'confirmation'])->name('bookings.confirmation');
 Route::get('/bookings', [BookingController::class, 'index'])->name('booking.index');
+
+Route::post('/venues/{venue}/comments', [CommentController::class, 'store'])->middleware('auth');
+Route::get('/comments/{comment}/edit', [CommentController::class, 'edit'])->name('comments.edit')->middleware('auth');
+Route::patch('/comments/{comment}', [CommentController::class, 'update'])->name('comments.update')->middleware('auth');
+Route::delete('/comments/{comment}', [CommentController::class, 'destroy'])->name('comments.destroy')->middleware('auth');

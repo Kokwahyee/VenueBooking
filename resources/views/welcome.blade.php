@@ -815,15 +815,15 @@
               />
               <div data-thq="thq-navbar-nav" class="navbar4-desktop-menu">
                 <nav class="navbar4-links">
-                  <span class="thq-body-small thq-link"><span>Home</span></span>
+                  <span class="thq-body-small thq-link"><span><a href="{{ route('login') }}" >Home</a></span></span>
                   <span class="thq-body-small thq-link">
-                    <span>Venue</span>
+                    <span><a href="venue" >Venue</a></span>
                   </span>
                   <span class="thq-body-small thq-link">
-                    <span>Booking</span>
+                    <span><a href="{{ route('login') }}" >Booking</a></span>
                   </span>
                   <span class="thq-body-small thq-link">
-                    <span>About Us</span>
+                    <span><a href="{{ route('login') }}" >About Us</a></span>
                   </span>
                   <span class="thq-body-small thq-link">
                     <span>Contact</span>

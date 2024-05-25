@@ -60,12 +60,28 @@
             color: red; /* Change color as needed */
             z-index: 2;
         }
+
+        /* Background Image for the body */
+        body {
+            background-image: url('https://th.bing.com/th/id/OIP.r_vDGac2hYeVs_v6LaVYogHaHa?rs=1&pid=ImgDetMain');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-position: bottom;
+            background-color: #000; /* Fallback color */
+        }
+
+        /* Additional styles to make the content readable over the background image */
+        .bg-overlay {
+            background-color: rgba(255, 255, 255, 0.9);
+            min-height: 100vh;
+        }
     </style>
 </head>
-<body class="font-sans antialiased">
+<body class="font-sans antialiased bg-overlay">
 <x-banner />
 
-<div class="min-h-screen bg-gray-100">
+<div class="min-h-screen bg-gray-100 bg-opacity-75">
     @livewire('navigation-menu')
 
     <!-- Page Heading -->
@@ -89,4 +105,3 @@
 <x-flash-message />
 </body>
 </html>
-

@@ -1,6 +1,6 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+        <h2 class="font-semibold text-xl text-gray-800 leading-tight text-center">
             {{ __('Book Venue') }}
         </h2>
     </x-slot>
@@ -25,19 +25,19 @@
                             <!-- Venue Description -->
                             <div class="mt-4">
                                 <x-label for="venue_description" :value="__('Description:')" />
-                                <x-label value="{{ $venue->venue_description }}"  style="font-weight: bold;" />
+                                <x-label :value="$venue->venue_description" style="font-weight: bold;" />
                             </div>
 
                             <!-- Venue Location -->
                             <div class="mt-4">
                                 <x-label for="venue_location" :value="__('Location:')" />
-                                <x-label value="{{ $venue->venue_location }}"  style="font-weight: bold;" />
+                                <x-label :value="$venue->venue_location" style="font-weight: bold;" />
                             </div>
                             
                             <!-- User Email -->
                             <div class="mt-4">
                                 <x-label for="user_email" :value="__('Booked by:')" />
-                                <x-label value="{{ auth()->user()->email }}"  style="font-weight: bold;" />
+                                <x-label :value="auth()->user()->email" style="font-weight: bold;" />
                             </div>
                         </div>
 
@@ -46,7 +46,7 @@
                             <!-- Date and Time -->
                             <div class="mt-4">
                                 <x-label for="date" :value="__('Date')" />
-                                <x-input id="date" class="block mt-1 w-full flatpickr" type="text" name="date" value="{{ date('Y-m-d') }}" required />
+                                <x-input id="date" class="block mt-1 w-full flatpickr" type="text" name="date" value="{{ date('Y-m-d', strtotime('+1 day')) }}" required />
                             </div>
                             
                             <div class="grid grid-cols-3 gap-4 mt-2">
@@ -78,7 +78,7 @@
     flatpickr('.flatpickr', {
         dateFormat: 'Y-m-d', // Set the date format
         enableTime: false, // Disable time selection
-        minDate: 'today', // Set the minimum selectable date to today
+        minDate: new Date().fp_incr(1), // Set the minimum selectable date to tomorrow
     });
 
     $(document).ready(function() {
@@ -93,7 +93,7 @@
         $.ajax({
             url: '{{ route("bookings.getTimeSlots") }}',
             method: 'GET',
-            data: { date: selectedDate,venue_id: venueId},
+            data: { date: selectedDate, venue_id: venueId },
             success: function (response) {
                 // Log the response
                 console.log('Response:', response);
@@ -121,5 +121,4 @@
             }
         });
     });
-
 </script>

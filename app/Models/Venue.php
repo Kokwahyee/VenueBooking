@@ -19,4 +19,8 @@ class Venue extends Model
                 ->orWhere('venue_location', 'like', '%' . request('search') . '%');
         }
     }
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
+    }
 }
