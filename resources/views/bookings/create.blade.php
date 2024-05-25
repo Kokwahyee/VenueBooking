@@ -88,12 +88,13 @@
     $('#date').change(function () {
         var venueId = {{ $venue->id }};
         var selectedDate = $(this).val();
+        var status = 'Cancelled';
 
         // Send AJAX request to fetch booked time slots for the selected date
         $.ajax({
             url: '{{ route("bookings.getTimeSlots") }}',
             method: 'GET',
-            data: { date: selectedDate, venue_id: venueId },
+            data: { date: selectedDate, venue_id: venueId, status: status },
             success: function (response) {
                 // Log the response
                 console.log('Response:', response);

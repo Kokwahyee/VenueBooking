@@ -5,16 +5,49 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Booking;
 use App\Models\Venue;
+use Illuminate\Support\Facades\Auth;
 
 class BookingController extends Controller
 {
     public function index()
     {
-        // Paginate the booking records from the database
-        $bookings = Booking::paginate(10); // Adjust the number as per your requirement
+        if (Auth::user()->role === 'admin') {
+            // Admin can view all booking records, ordered by latest
+            $bookings = Booking::orderBy('created_at', 'desc')->paginate(10); // Adjust the number as per your requirement
+        } else {
+            // Non-admin users can only view their own bookings
+            $bookings = Booking::where('user_id', Auth::id())->orderBy('created_at', 'desc')->paginate(10);
+        }
 
         // Pass the paginated booking records to the view for display
         return view('bookings.index', compact('bookings'));
+    }
+
+    public function show($id)
+    {
+        // Retrieve the booking details by ID
+        $booking = Booking::findOrFail($id);
+
+        // Render the show page with the booking details
+        return view('bookings.show', compact('booking'));
+    }
+
+    public function updateStatus(Request $request, $id)
+    {
+        // Validate the request
+        $request->validate([
+            'status' => 'required|in:Pending,Paid,Cancelled',
+        ]);
+
+        // Retrieve the booking
+        $booking = Booking::findOrFail($id);
+
+        // Update the status
+        $booking->status = $request->input('status');
+        $booking->save();
+
+        // Redirect back to the booking details page with a success message
+        return redirect()->route('bookings.show', $booking->id)->with('status', 'Booking status updated successfully.');
     }
 
     public function create(Request $request, Venue $venue)
@@ -41,6 +74,7 @@ class BookingController extends Controller
         // Retrieve booked time slots for the selected venue on the selected date
         $bookedTimeSlots = Booking::where('venue_id', $venue->id)
                                     ->whereDate('date', $request->date)
+                                    ->whereIn('status', ['Pending', 'Paid'])
                                     ->pluck('time_slots')
                                     ->flatten()
                                     ->toArray();
@@ -54,6 +88,7 @@ class BookingController extends Controller
     // Retrieve booked time slots for the selected date
     $bookedTimeSlots = Booking::where('venue_id', $request->venue_id)
                                 ->whereDate('date', $request->date)
+                                ->whereIn('status', ['Pending', 'Paid'])
                                 ->pluck('time_slots')
                                 ->flatten()
                                 ->toArray();

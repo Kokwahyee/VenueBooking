@@ -17,6 +17,7 @@
                     </x-nav-link>
                 </div>
 
+                @if(Auth::user() && Auth::user()->role === 'admin')
                 <!-- Venue Dropdown -->
                 <div class="hidden sm:flex sm:items-center sm:ml-6">
                     <x-dropdown align="left" width="48">
@@ -42,13 +43,26 @@
                         </x-slot>
                     </x-dropdown>
                 </div>
-
                 <!-- Bookings Link -->
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                     <x-nav-link href="{{ route('booking.index') }}" :active="request()->routeIs('bookings')" class="text-gray-300 hover:text-white">
                         {{ __('Bookings') }}
                     </x-nav-link>
                 </div>
+                @else
+                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                    <x-nav-link href="{{ route('venue') }}" :active="request()->routeIs('venue')" class="text-gray-300 hover:text-white">
+                        {{ __('Venue List') }}
+                    </x-nav-link>
+                </div>
+                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                    <x-nav-link href="{{ route('booking.index') }}" :active="request()->routeIs('bookings')" class="text-gray-300 hover:text-white">
+                        {{ __('My Bookings') }}
+                    </x-nav-link>
+                </div>
+                @endif
+
+                
             </div>
 
             <div class="hidden sm:flex sm:items-center sm:ml-6">

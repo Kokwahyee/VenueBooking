@@ -47,6 +47,8 @@ Route::post('/bookings', [BookingController::class, 'store'])->name('bookings.st
 Route::get('/bookings/getTimeSlots', [BookingController::class, 'getTimeSlots'])->name('bookings.getTimeSlots');
 Route::get('/bookings/confirmation/{id}', [BookingController::class, 'confirmation'])->name('bookings.confirmation');
 Route::get('/bookings', [BookingController::class, 'index'])->name('booking.index');
+Route::get('/bookings/{id}', [BookingController::class, 'show'])->name('bookings.show');
+Route::patch('/bookings/{id}/status', [BookingController::class, 'updateStatus'])->name('bookings.updateStatus');
 
 Route::post('/venues/{venue}/comments', [CommentController::class, 'store'])->middleware('auth');
 Route::get('/comments/{comment}/edit', [CommentController::class, 'edit'])->name('comments.edit')->middleware('auth');
