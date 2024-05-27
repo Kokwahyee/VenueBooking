@@ -4,7 +4,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\VenueController;
 use App\Http\Controllers\BookingController;
 use App\Http\Controllers\CommentController;
-
+use App\Http\Controllers\RequestChangeController;
+use App\Http\Controllers\RequestCommentController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -50,7 +51,24 @@ Route::get('/bookings', [BookingController::class, 'index'])->name('booking.inde
 Route::get('/bookings/{id}', [BookingController::class, 'show'])->name('bookings.show');
 Route::patch('/bookings/{id}/status', [BookingController::class, 'updateStatus'])->name('bookings.updateStatus');
 
+Route::get('/bookings/{booking}/request-change', [BookingController::class, 'requestChangeForm'])->name('bookings.requestChange');
+//Route::post('/bookings/{booking}/request-change', [BookingController::class, 'submitChangeRequest'])->name('bookings.submitChangeRequest');
+Route::post('/bookings/{booking}/request-change', [RequestChangeController::class, 'store'])->name('bookings.submitChangeRequest');
+
 Route::post('/venues/{venue}/comments', [CommentController::class, 'store'])->middleware('auth');
 Route::get('/comments/{comment}/edit', [CommentController::class, 'edit'])->name('comments.edit')->middleware('auth');
 Route::patch('/comments/{comment}', [CommentController::class, 'update'])->name('comments.update')->middleware('auth');
 Route::delete('/comments/{comment}', [CommentController::class, 'destroy'])->name('comments.destroy')->middleware('auth');
+
+Route::middleware('auth')->group(function () {
+    Route::get('/request-changes', [RequestChangeController::class, 'index'])->name('request_changes.index');
+    Route::get('/request_changes/{id}', [RequestChangeController::class, 'show'])->name('request_changes.show');
+    Route::get('/request-changes/{id}/edit', [RequestChangeController::class, 'edit'])->name('request_changes.edit');
+    Route::put('/request-changes/{id}', [RequestChangeController::class, 'update'])->name('request_changes.update');
+    Route::delete('/request-changes/{id}', [RequestChangeController::class, 'destroy'])->name('request_changes.destroy');
+    Route::post('/request_changes/{id}/resolve', [RequestChangeController::class, 'resolve'])->name('request_changes.resolve');
+});
+
+Route::middleware(['auth'])->group(function () {
+    Route::post('/request_comments/store', [RequestCommentController::class, 'store'])->name('request_comments.store');
+});

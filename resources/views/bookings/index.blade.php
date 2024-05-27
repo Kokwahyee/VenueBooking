@@ -30,8 +30,7 @@
                                     <td class="border-2 border-black px-4 py-2">{{ $booking->status }}</td>
                                     <td class="border-2 border-black px-4 py-2">
                                         <a href="{{ route('bookings.show', $booking->id) }}" class="text-blue-500 hover:text-blue-700 mr-2 px-2 py-1 rounded-md bg-blue-100 hover:bg-blue-200 transition-colors duration-300">View</a>
-                                        <!-- Additional button for Request for Change -->
-                                        <a href="" class="text-purple-500 hover:text-purple-700 px-2 py-1 rounded-md bg-purple-100 hover:bg-purple-200 transition-colors duration-300">Request Change</a>
+                                        <a href="{{ route('bookings.requestChange', $booking->id) }}" class="text-purple-500 hover:text-purple-700 px-2 py-1 rounded-md bg-purple-100 hover:bg-purple-200 transition-colors duration-300">Request Change</a>
                                     </td>
                                 </tr>
                             @endforeach

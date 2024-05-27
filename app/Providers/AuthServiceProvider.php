@@ -5,10 +5,14 @@ namespace App\Providers;
 use App\Models\Comment;
 use App\Policies\CommentPolicy;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
+use App\Models\RequestChange;
+use App\Policies\RequestChangePolicy;
+
 
 class AuthServiceProvider extends ServiceProvider
 {
     protected $policies = [
+        RequestChange::class => RequestChangePolicy::class,
         Comment::class => CommentPolicy::class,
     ];
 

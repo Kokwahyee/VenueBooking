@@ -32,6 +32,26 @@ class BookingController extends Controller
         return view('bookings.show', compact('booking'));
     }
 
+    public function requestChangeForm($id)
+    {
+        $booking = Booking::findOrFail($id);
+        return view('bookings.request-change', compact('booking'));
+    }
+
+    public function submitChangeRequest(Request $request, $id)
+    {
+        $booking = Booking::findOrFail($id);
+        // Validate and process the request
+        $request->validate([
+            'type' => 'required|string|in:refund,change',
+            'reason' => 'required|string',
+        ]);
+
+        // Process the request (e.g., save to the database, send notification, etc.)
+
+        return redirect()->route('bookings.index')->with('success', 'Your request has been submitted.');
+    }
+
     public function updateStatus(Request $request, $id)
     {
         // Validate the request

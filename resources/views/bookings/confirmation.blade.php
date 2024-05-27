@@ -23,6 +23,8 @@
                         @endforeach
                     </ul>
                     <p class="text-gray-700 mt-4">Booked by: <span class="font-semibold">{{ $booking->user->email }}</span></p>
+                    <br>
+                    <p class="text-xl font-semibold mb-2">Please pay at our nearest office</p>
                 </div>
             </div>
         </div>
