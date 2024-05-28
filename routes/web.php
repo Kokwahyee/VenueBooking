@@ -60,6 +60,8 @@ Route::get('/comments/{comment}/edit', [CommentController::class, 'edit'])->name
 Route::patch('/comments/{comment}', [CommentController::class, 'update'])->name('comments.update')->middleware('auth');
 Route::delete('/comments/{comment}', [CommentController::class, 'destroy'])->name('comments.destroy')->middleware('auth');
 
+Route::get('/bookings/{id}/download', [BookingController::class, 'downloadPdf'])->name('bookings.downloadPdf');
+
 Route::middleware('auth')->group(function () {
     Route::get('/request-changes', [RequestChangeController::class, 'index'])->name('request_changes.index');
     Route::get('/request_changes/{id}', [RequestChangeController::class, 'show'])->name('request_changes.show');

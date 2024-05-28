@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('venue_description');
             $table->string('venue_location');
             $table->string('venue_image')->nullable();
+            $table->decimal('venue_price', 8, 2)->default(0.00);
             $table->timestamps();
         });
     }

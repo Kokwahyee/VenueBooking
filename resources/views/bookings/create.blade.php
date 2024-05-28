@@ -8,9 +8,11 @@
     <div class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
         <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
             <div class="p-6 sm:px-20 bg-white border-b border-gray-200">
-                <form method="POST" action="{{ route('bookings.store') }}">
+                <form id="bookingForm" method="POST" action="{{ route('bookings.store') }}">
                     @csrf
                     <input type="hidden" name="venue_id" value="{{ $venue->id }}">
+                    <input type="hidden" id="venue_price" value="{{ $venue->venue_price }}">
+                    <input type="hidden" id="total_cost" name="total_cost">
 
                     <div class="grid grid-cols-2 gap-4">
 
@@ -39,6 +41,12 @@
                                 <x-label for="user_email" :value="__('Booked by:')" />
                                 <x-label :value="auth()->user()->email" style="font-weight: bold;" />
                             </div>
+
+                            <!-- Venue Price -->
+                            <div class="mt-4">
+                                <x-label for="venue_price" :value="__('Price Per Hour:')" />
+                                <x-label :value="$venue->venue_price" style="font-weight: bold;" />
+                            </div>
                         </div>
 
                         <!-- Second Column -->
@@ -53,13 +61,18 @@
                                 @foreach($timeSlots as $timeSlot)
                                   <div>
                                     <label class="inline-flex items-center">
-                                      <input type="checkbox" name="time[]" value="{{ $timeSlot }}" class="form-checkbox h-5 w-5 text-indigo-600">
+                                      <input type="checkbox" name="time[]" value="{{ $timeSlot }}" class="form-checkbox h-5 w-5 text-indigo-600 time-slot-checkbox">
                                       <span class="ml-2 text-gray-700">{{ $timeSlot }}</span>
                                     </label>
                                   </div>
                                 @endforeach
-                              </div>
+                            </div>
                             
+                            <!-- Total Cost Display -->
+                            <div class="mt-4">
+                                <x-label for="total_cost_display" :value="__('Total Cost:')" />
+                                <x-label id="total_cost_display" :value="'$0.00'" style="font-weight: bold;" />
+                            </div>
                         </div>
                     </div>
 
@@ -76,9 +89,9 @@
 
 <script>
     flatpickr('.flatpickr', {
-        dateFormat: 'Y-m-d', // Set the date format
-        enableTime: false, // Disable time selection
-        minDate: new Date().fp_incr(1), // Set the minimum selectable date to tomorrow
+        dateFormat: 'Y-m-d',
+        enableTime: false,
+        minDate: new Date().fp_incr(1),
     });
 
     $(document).ready(function() {
@@ -90,27 +103,18 @@
         var selectedDate = $(this).val();
         var status = 'Cancelled';
 
-        // Send AJAX request to fetch booked time slots for the selected date
         $.ajax({
             url: '{{ route("bookings.getTimeSlots") }}',
             method: 'GET',
             data: { date: selectedDate, venue_id: venueId, status: status },
             success: function (response) {
-                // Log the response
                 console.log('Response:', response);
-
-                // Clear all checkboxes before updating with the new response
                 $('input[type="checkbox"]').prop('checked', false).prop('disabled', false);
 
-                // Iterate through each element of the response array
                 response.forEach(function (element) {
-                    // Parse the JSON array within the string
                     var bookedTimeSlots = JSON.parse(element);
-
-                    // Log the booked time slots
                     console.log('Booked Time Slots:', bookedTimeSlots);
 
-                    // Disable booked time slots checkboxes
                     bookedTimeSlots.forEach(function (timeSlot) {
                         console.log('Disabling time slot:', timeSlot);
                         $('input[type="checkbox"][value="' + timeSlot + '"]').prop('disabled', true);
@@ -121,5 +125,22 @@
                 console.error(xhr.responseText);
             }
         });
+    });
+
+    // Calculate total cost based on selected time slots
+    $('.time-slot-checkbox').change(function () {
+        var selectedTimeSlots = $('.time-slot-checkbox:checked').length;
+        var venuePrice = parseFloat($('#venue_price').val());
+        var totalCost = selectedTimeSlots * venuePrice;
+        $('#total_cost').val(totalCost.toFixed(2));
+        $('#total_cost_display').text('$' + totalCost.toFixed(2));
+    });
+
+    $('#bookingForm').submit(function (e) {
+        var totalCost = $('#total_cost').val();
+        if (!totalCost || totalCost <= 0) {
+            e.preventDefault();
+            alert('Please select at least one time slot.');
+        }
     });
 </script>

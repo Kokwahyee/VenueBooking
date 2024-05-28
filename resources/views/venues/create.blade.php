@@ -38,6 +38,13 @@
                         <input type="file" name="venue_image" class="form-control" />
                     </div>
 
+                    <!-- Venue Price -->
+                    <div>
+                        <x-label for="venue_price" :value="__('Price Per Hour')" />
+
+                        <x-input id="venue_price" class="block mt-1 w-full" type="number" name="venue_price" placeholder="0.00" min="0" value="0" step="0.05" pattern="^\d+(?:\.\d{1,2})?$" required autofocus />
+                    </div>
+
                     <div class="flex items-center justify-end mt-4">
                         <x-button class="ml-4">
                             {{ __('Save') }}
@@ -48,3 +55,13 @@
         </div>
     </div>
 </x-app-layout>
+
+<script>
+    document.getElementById('venue_price').addEventListener('blur', function() {
+        let value = parseFloat(this.value);
+        if (!isNaN(value)) {
+            let roundedValue = Math.round(value / 0.05) * 0.05;
+            this.value = roundedValue.toFixed(2); // Ensure two decimal places
+        }
+    });
+</script>

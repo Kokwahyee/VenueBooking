@@ -27,6 +27,10 @@
                             <h3 class="font-semibold">Location:</h3>
                             <p>{{ $venue->venue_location }}</p>
                         </div>
+                        <div>
+                            <h3 class="font-semibold">Price:</h3> <!-- Added Price section -->
+                            <p>${{ number_format($venue->venue_price, 2) }}</p>
+                        </div>
                         <div class="mt-1 border-t pt-1 text-xs text-gray-500">
                             <a href="{{ route('booking.create', ['venue' => $venue->id]) }}" class="inline-block bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
                                 Book Venue
@@ -35,13 +39,10 @@
                     </div>
                 </div>
                 
-                
-
                 <!-- Button to toggle comment section -->
-                <button id="toggleCommentSection" class="bg-green-500 hover:bg-green-700 text-white font-bold py-1 px-2 rounded text-xs">
+                <button id="toggleCommentSection" class="bg-green-500 hover:bg-green-700 text-white font-bold py-1 px-2 rounded text-xs mt-4">
                     Give Feedback
                 </button>
-                
 
                 <!-- Comment Section (Initially hidden) -->
                 <div id="commentSection" class="hidden mt-4">

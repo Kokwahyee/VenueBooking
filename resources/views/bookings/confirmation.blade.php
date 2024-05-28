@@ -23,8 +23,12 @@
                         @endforeach
                     </ul>
                     <p class="text-gray-700 mt-4">Booked by: <span class="font-semibold">{{ $booking->user->email }}</span></p>
+                    <p class="text-xl font-semibold mb-2">Total Price: <span class="font-semibold">${{ $booking->total_cost }}</span></p>
                     <br>
                     <p class="text-xl font-semibold mb-2">Please pay at our nearest office</p>
+                    <a href="{{ route('bookings.downloadPdf', $booking->id) }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                        Download PDF
+                    </a>
                 </div>
             </div>
         </div>

@@ -23,7 +23,6 @@ class VenueController extends Controller
         return view('venues.show', compact('venue'));
     }
 
-
     // Show create form
     public function create()
     {
@@ -31,40 +30,35 @@ class VenueController extends Controller
     }
 
     // Store venue data
-public function store(Request $request)
-{
-    $formFields = $request->validate([
-        'venue_title' => 'required',
-        'venue_description' => 'required',
-        'venue_location' => 'required',
-        'venue_image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048', // Update validation rules for image
-    ]);
+    public function store(Request $request)
+    {
+        $formFields = $request->validate([
+            'venue_title' => 'required',
+            'venue_description' => 'required',
+            'venue_location' => 'required',
+            'venue_price' => 'required|numeric|min:0',
+            'venue_image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ]);
 
-    $path = null; // Initialize path variable
+        $path = null;
 
-    if ($request->hasFile('venue_image')) {
-        $file = $request->file('venue_image');
+        if ($request->hasFile('venue_image')) {
+            $file = $request->file('venue_image');
+            $filename = time() . '.' . $file->getClientOriginalExtension();
+            $file->move(public_path('uploads/venue'), $filename);
+            $path = 'uploads/venue/' . $filename;
+        }
 
-        // Generate unique file name
-        $filename = time() . '.' . $file->getClientOriginalExtension();
+        Venue::create([
+            'venue_title' => $formFields['venue_title'],
+            'venue_description' => $formFields['venue_description'],
+            'venue_location' => $formFields['venue_location'],
+            'venue_price' => $formFields['venue_price'],
+            'venue_image' => $path,
+        ]);
 
-        // Move the file to the specified directory
-        $file->move(public_path('uploads/venue'), $filename);
-
-        // Set the path for the saved image
-        $path = 'uploads/venue/' . $filename;
+        return redirect('/venue_manage')->with('message', 'Venue Created Successfully!');
     }
-
-    // Create venue with form data and image path
-    Venue::create([
-        'venue_title' => $formFields['venue_title'],
-        'venue_description' => $formFields['venue_description'],
-        'venue_location' => $formFields['venue_location'],
-        'venue_image' => $path, // Set the image path in the database
-    ]);
-
-    return redirect('/venue_manage')->with('message', 'Venue Created Successfully!');
-}
 
     // Show edit form
     public function edit(Venue $venue)
@@ -79,42 +73,29 @@ public function store(Request $request)
             'venue_title' => 'required',
             'venue_description' => 'required',
             'venue_location' => 'required',
-            'venue_image' => 'nullable|mimes:png,jpg,jpeg,webp',
+            'venue_price' => 'required|numeric|min:0',
+            'venue_image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
+
+        $path = $venue->venue_image;
 
         if ($request->hasFile('venue_image')) {
             $file = $request->file('venue_image');
+            $filename = time() . '.' . $file->getClientOriginalExtension();
+            $file->move(public_path('uploads/venue'), $filename);
+            $path = 'uploads/venue/' . $filename;
 
-            if ($file->isValid()) {
-                $extension = $file->getClientOriginalExtension();
-                $filename = time() . '.' . $extension;
-                $path = 'uploads/venue/';
-                $file->move($path, $filename);
-
-                // Delete old image file
-                if (File::exists($venue->venue_image)) {
-                    File::delete($venue->venue_image);
-                }
-
-                $venue->update([
-                    'venue_title' => $formFields['venue_title'],
-                    'venue_description' => $formFields['venue_description'],
-                    'venue_location' => $formFields['venue_location'],
-                    'venue_image' => $path . $filename,
-                ]);
-
-                return redirect()->route('venue.manage')->with('message', 'Venue Updated Successfully!');
-            } else {
-                // Handle invalid file
-                return redirect()->back()->withInput()->withErrors(['venue_image' => 'Invalid file uploaded']);
+            if (File::exists($venue->venue_image)) {
+                File::delete($venue->venue_image);
             }
         }
 
-        // Update venue data without changing image
         $venue->update([
             'venue_title' => $formFields['venue_title'],
             'venue_description' => $formFields['venue_description'],
             'venue_location' => $formFields['venue_location'],
+            'venue_price' => $formFields['venue_price'],
+            'venue_image' => $path,
         ]);
 
         return redirect()->route('venue.manage')->with('message', 'Venue Updated Successfully!');
@@ -123,7 +104,6 @@ public function store(Request $request)
     // Delete venue
     public function destroy(Venue $venue)
     {
-        // Delete image file if exists
         if (File::exists($venue->venue_image)) {
             File::delete($venue->venue_image);
         }
@@ -140,5 +120,4 @@ public function store(Request $request)
             'venues' => Venue::paginate(10)
         ]);
     }
-    
 }

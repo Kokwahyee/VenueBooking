@@ -17,6 +17,7 @@
                             <th class="border-2 border-black px-4 py-2 text-left font-semibold">Title</th>
                             <th class="border-2 border-black px-4 py-2 text-left font-semibold">Description</th>
                             <th class="border-2 border-black px-4 py-2 text-left font-semibold">Location</th>
+                            <th class="border-2 border-black px-4 py-2 text-left font-semibold">Price</th> <!-- Added Price column -->
                             <th class="border-2 border-black px-4 py-2 text-left font-semibold">Actions</th>
                         </tr>
                     </thead>
@@ -27,6 +28,7 @@
                                     <td class="border-2 border-black px-4 py-2">{{ $venue->venue_title }}</td>
                                     <td class="border-2 border-black px-4 py-2">{{ $venue->venue_description }}</td>
                                     <td class="border-2 border-black px-4 py-2">{{ $venue->venue_location }}</td>
+                                    <td class="border-2 border-black px-4 py-2">{{ number_format($venue->venue_price, 2) }}</td> <!-- Display venue price -->
                                     <td class="border-2 border-black px-4 py-2">
                                         <!-- Edit button -->
                                         <a href="{{ route('venue.edit', $venue->id) }}" class="text-blue-500 hover:text-blue-700 mr-2 px-2 py-1 rounded-md bg-blue-100 hover:bg-blue-200 transition-colors duration-300">Edit</a>
@@ -42,7 +44,7 @@
                             @endforeach
                         @else
                             <tr>
-                                <td colspan="4" class="border-2 border-black px-4 py-2">No venues found</td>
+                                <td colspan="5" class="border-2 border-black px-4 py-2">No venues found</td> <!-- Adjusted colspan to 5 -->
                             </tr>
                         @endunless
                     </tbody>

@@ -30,6 +30,12 @@
                         <x-input id="venue_location" class="block mt-1 w-full" type="text" name="venue_location" required value="{{ $venue->venue_location }}" />
                     </div>
 
+                    <!-- Venue Price -->
+                    <div class="mt-4">
+                        <x-label for="venue_price" :value="__('Price Per Hour')" />
+                        <x-input id="venue_price" class="block mt-1 w-full" type="number" name="venue_price" placeholder="0.00" min="0" step="0.05" pattern="^\d+(?:\.\d{1,2})?$" required value="{{ $venue->venue_price }}" />
+                    </div>
+
                     <!-- Venue Images -->
                     <div class="mt-4">
                         <label for="venue_image" class="block text-sm font-medium text-gray-700">Upload File/Image</label>
@@ -87,6 +93,15 @@
 
             // Read the selected file as a data URL
             reader.readAsDataURL(file);
+        }
+    });
+
+    // Add event listener for price input blur event
+    document.getElementById('venue_price').addEventListener('blur', function() {
+        let value = parseFloat(this.value);
+        if (!isNaN(value)) {
+            let roundedValue = Math.round(value / 0.05) * 0.05;
+            this.value = roundedValue.toFixed(2); // Ensure two decimal places
         }
     });
 </script>

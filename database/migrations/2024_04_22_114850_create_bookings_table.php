@@ -20,6 +20,7 @@ class CreateBookingsTable extends Migration
             $table->string('time_slots')->nullable(); // Modify the time_slots column
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->string('status')->default('Pending');
+            $table->string('total_cost')->nullable();
             $table->timestamps();
         });
     }

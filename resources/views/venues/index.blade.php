@@ -18,7 +18,8 @@
                             <div class="mt-1 text-sm">
                                 <!--<p>{{ $venue->venue_description }}</p>
                                 <p>{{ $venue->venue_location }}</p> -->
-                                <div class=" text-xs text-blue-500 p-2">
+                                <p class="text-gray-700">Price: ${{ number_format($venue->venue_price, 2) }} per hour</p> <!-- Display venue price -->
+                                <div class="text-xs text-blue-500 p-2">
                                 <a href="{{ route('venue.show', ['venue' => $venue->id]) }}">
                                     View Details
                                 </a>
