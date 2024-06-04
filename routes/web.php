@@ -6,6 +6,7 @@ use App\Http\Controllers\BookingController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\RequestChangeController;
 use App\Http\Controllers\RequestCommentController;
+use App\Http\Controllers\ReportController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -50,6 +51,17 @@ Route::get('/bookings/confirmation/{id}', [BookingController::class, 'confirmati
 Route::get('/bookings', [BookingController::class, 'index'])->name('booking.index');
 Route::get('/bookings/{id}', [BookingController::class, 'show'])->name('bookings.show');
 Route::patch('/bookings/{id}/status', [BookingController::class, 'updateStatus'])->name('bookings.updateStatus');
+
+Route::middleware(['auth'])->group(function () {
+    // Route to display the report form
+    Route::get('/reports', [ReportController::class, 'showReportForm'])->name('reports.form');
+
+    // Route to generate the report
+    Route::post('/reports/generate', [ReportController::class, 'generateReport'])->name('reports.generate');
+
+    // Route to download the report as PDF
+    Route::post('/reports/download', [ReportController::class, 'downloadReport'])->name('reports.download');
+});
 
 Route::get('/bookings/{booking}/request-change', [BookingController::class, 'requestChangeForm'])->name('bookings.requestChange');
 //Route::post('/bookings/{booking}/request-change', [BookingController::class, 'submitChangeRequest'])->name('bookings.submitChangeRequest');

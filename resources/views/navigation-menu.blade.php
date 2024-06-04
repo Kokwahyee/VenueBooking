@@ -45,14 +45,29 @@
                 </div>
                 <!-- Bookings Link -->
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                    <x-nav-link href="{{ route('booking.index') }}" :active="request()->routeIs('bookings')" class="text-gray-300 hover:text-white">
+                    <x-nav-link href="{{ route('booking.index') }}" :active="request()->routeIs('bookings.*')" class="text-gray-300 hover:text-white">
                         {{ __('Bookings') }}
+                    </x-nav-link>
+                </div>
+                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                    <x-nav-link href="{{ route('request_changes.index') }}" :active="request()->routeIs('request_changes.*')" class="text-gray-300 hover:text-white">
+                        {{ __('Requests') }}
+                    </x-nav-link>
+                </div>
+                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                    <x-nav-link href="{{ route('reports.form') }}" :active="request()->routeIs('reports.generate')" class="text-gray-300 hover:text-white">
+                        {{ __('Reports') }}
                     </x-nav-link>
                 </div>
                 @else
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                     <x-nav-link href="{{ route('venue') }}" :active="request()->routeIs('venue')" class="text-gray-300 hover:text-white">
                         {{ __('Venue List') }}
+                    </x-nav-link>
+                </div>
+                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                    <x-nav-link href="{{ route('request_changes.index') }}" :active="request()->routeIs('request')" class="text-gray-300 hover:text-white">
+                        {{ __('My Request') }}
                     </x-nav-link>
                 </div>
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">

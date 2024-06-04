@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Booking; // Import the Booking model
 
 class Venue extends Model
 {
@@ -24,5 +25,11 @@ class Venue extends Model
     public function comments()
     {
         return $this->hasMany(Comment::class);
+    }
+
+    // Define the relationship with bookings
+    public function bookings()
+    {
+        return $this->hasMany(Booking::class);
     }
 }

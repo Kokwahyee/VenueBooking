@@ -54,7 +54,7 @@
                             <!-- Date and Time -->
                             <div class="mt-4">
                                 <x-label for="date" :value="__('Date')" />
-                                <x-input id="date" class="block mt-1 w-full flatpickr" type="text" name="date" value="{{ date('Y-m-d', strtotime('+1 day')) }}" required />
+                                <x-input id="date" class="block mt-1 w-full flatpickr" type="text" name="date"  required />
                             </div>
                             
                             <div class="grid grid-cols-3 gap-4 mt-2">
