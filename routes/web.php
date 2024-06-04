@@ -86,3 +86,9 @@ Route::middleware('auth')->group(function () {
 Route::middleware(['auth'])->group(function () {
     Route::post('/request_comments/store', [RequestCommentController::class, 'store'])->name('request_comments.store');
 });
+
+//Payment Route
+Route::middleware('auth')->group(function () {
+    Route::get('/payment', [PaymentController::class, 'showPaymentForm'])->name('payment.form');
+    Route::post('/process-payment', [PaymentController::class, 'processPayment'])->name('process.payment');
+});
