@@ -7,6 +7,7 @@ use App\Http\Controllers\CommentController;
 use App\Http\Controllers\RequestChangeController;
 use App\Http\Controllers\RequestCommentController;
 use App\Http\Controllers\ReportController;
+use App\Http\Controllers\PaymentController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -89,6 +90,6 @@ Route::middleware(['auth'])->group(function () {
 
 //Payment Route
 Route::middleware('auth')->group(function () {
-    Route::get('/payment', [PaymentController::class, 'showPaymentForm'])->name('payment.form');
-    Route::post('/process-payment', [PaymentController::class, 'processPayment'])->name('process.payment');
+    Route::get('/booking/{id}/payment', [PaymentController::class, 'showPaymentForm'])->name('payment.form');   
+    Route::post('/booking/{id}/process-payment', [PaymentController::class, 'processPayment'])->name('payment.process');
 });

@@ -34,7 +34,7 @@
                     @if (in_array($booking->status, ['Pending', 'Cancelled']))
                         <p class="text-xl font-semibold mb-2">Note: If you wish to pay in cash then pay at our nearest office</p>
                         <br>
-                        <a href="{{ route('bookings.downloadPdf', $booking->id) }}" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
+                        <a href="{{ route('payment.form', $booking->id) }}" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
                             Checkout
                         </a>
                     @endif
