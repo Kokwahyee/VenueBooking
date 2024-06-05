@@ -45,6 +45,7 @@ class PaymentController extends Controller
             $booking->save();
         }
 
-        return response()->json(['client_secret' => $paymentIntent->client_secret]);
+        // Redirect to the booking show page
+        return redirect()->route('bookings.show', ['id' => $booking->id]);
     }
 }

@@ -78,3 +78,7 @@ commands to run
 - php artisan db:seed
 - php artisan serve
 
+composer require laravel/laravel
+composer require barryvdh/laravel-dompdf
+composer require stripe/stripe-php
+
