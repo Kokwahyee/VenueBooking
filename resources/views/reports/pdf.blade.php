@@ -72,27 +72,21 @@
         </tbody>
     </table>
 
-    <h2>Booking Details</h2>
+    <h2>Transaction</h2>
     <table>
         <thead>
             <tr>
+                <th>Payment ID</th>
                 <th>Booking ID</th>
-                <th>Venue</th>
-                <th>Date</th>
-                <th>User</th>
-                <th>Time Slots</th>
-                <th>Total Cost</th>
+                <th>Amount</th>
             </tr>
         </thead>
         <tbody>
-            @foreach ($bookings as $booking)
+            @foreach ($payments as $payment)
                 <tr>
-                    <td>{{ $booking->id }}</td>
-                    <td>{{ $booking->venue->venue_title }}</td>
-                    <td>{{ $booking->date }}</td>
-                    <td>{{ $booking->user->name }}</td>
-                    <td>{{ implode(', ', json_decode($booking->time_slots)) }}</td>
-                    <td>{{ $booking->total_cost }}</td>
+                    <td>{{ $payment->id }}</td>
+                    <td>{{ $payment->booking_id }}</td>
+                    <td>{{ $payment->amount }}</td>
                 </tr>
             @endforeach
         </tbody>

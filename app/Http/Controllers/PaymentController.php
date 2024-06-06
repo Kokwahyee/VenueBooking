@@ -7,9 +7,22 @@ use App\Models\Payment;
 use App\Models\Booking;
 use Stripe\Stripe;
 use Stripe\PaymentIntent;
+use Illuminate\Support\Facades\Auth;
 
 class PaymentController extends Controller
 {
+    public function index()
+    {
+        if (Auth::user()->role === 'admin') {
+            // Admin can view all booking records, ordered by latest
+            $payments = Payment::orderBy('created_at', 'desc')->paginate(10);
+        } else {
+            // Non-admin users can only view their own bookings
+            $payments = Payment::where('id', Auth::id())->orderBy('created_at', 'desc')->paginate(10);
+        }
+
+        return view('transaction', compact('payments'));
+    }
     public function showPaymentForm($id)
     {
         $booking = Booking::findOrFail($id);
@@ -26,6 +39,7 @@ class PaymentController extends Controller
             'amount' => $booking->total_cost * 100, // amount in cents
             'currency' => 'fjd',
             'payment_method_types' => ['card'],
+            'metadata' => ['booking_id' => $booking->id],
         ]);
 
         // Store payment details in the database
@@ -38,14 +52,14 @@ class PaymentController extends Controller
             'status' => $paymentIntent->status,
         ]);
 
-        // Check the status of the PaymentIntent
-        if ($paymentIntent->status == 'succeeded') {
+        // Check if the payment was successfully stored in the database
+        if ($payment) {
             // Update the booking status to 'Paid'
             $booking->status = 'Paid';
             $booking->save();
         }
 
         // Redirect to the booking show page
-        return redirect()->route('bookings.show', ['id' => $booking->id]);
+        return redirect()->route('bookings.confirmation', ['id' => $booking->id]);
     }
 }

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Booking;
 use App\Models\User;
 use App\Models\Venue;
+use App\Models\Payment;
 use Illuminate\Http\Request;
 use PDF;
 use Carbon\Carbon;
@@ -30,6 +31,7 @@ class ReportController extends Controller
 
         // Retrieve the bookings within the specified date range
         $bookings = Booking::whereBetween('date', [$startDate, $endDate])->get();
+        
 
         // Check if there are any bookings
         if ($bookings->isEmpty()) {
@@ -67,6 +69,8 @@ class ReportController extends Controller
     
         // Retrieve the bookings within the specified date range
         $bookings = Booking::whereBetween('date', [$startDate, $endDate])->get();
+        //Retrieve payment within the specific date range
+        $payments = Payment::whereBetween('created_at',[$startDate, $endDate])->get();
     
         // Check if there are any bookings
         if ($bookings->isEmpty()) {
@@ -93,7 +97,7 @@ class ReportController extends Controller
     
         // Generate the PDF
         $pdf = PDF::loadView('reports.pdf', compact(
-            'bookings', 'startDate', 'endDate', 'totalUsers', 'totalVenues', 'venueEarnings', 'pendingCount', 'paidCount', 'cancelledCount'
+            'payments','bookings', 'startDate', 'endDate', 'totalUsers', 'totalVenues', 'venueEarnings', 'pendingCount', 'paidCount', 'cancelledCount'
         ));
     
         // Set the filename

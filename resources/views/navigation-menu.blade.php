@@ -59,6 +59,11 @@
                         {{ __('Reports') }}
                     </x-nav-link>
                 </div>
+                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                    <x-nav-link href="{{ route('transaction') }}" :active="request()->routeIs('transaction')" class="text-gray-300 hover:text-white">
+                        {{ __('Transaction') }}
+                    </x-nav-link>
+                </div>
                 @else
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                     <x-nav-link href="{{ route('venue') }}" :active="request()->routeIs('venue')" class="text-gray-300 hover:text-white">
