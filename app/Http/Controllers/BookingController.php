@@ -45,7 +45,6 @@ class BookingController extends Controller
             'reason' => 'required|string',
         ]);
 
-        // Process the request (e.g., save to the database, send notification, etc.)
 
         return redirect()->route('bookings.index')->with('success', 'Your request has been submitted.');
     }
