@@ -1,5 +1,5 @@
 <x-app-layout>
-    <div class="max-w-2xl mx-auto py-6 sm:px-6 lg:px-8">
+    <div >
         <h2 class="text-lg font-semibold">Booking Management</h2><br>
 
         <!-- Enclosing div with white background -->

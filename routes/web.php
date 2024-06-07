@@ -94,3 +94,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/booking/{id}/payment', [PaymentController::class, 'showPaymentForm'])->name('payment.form');   
     Route::post('/booking/{id}/process-payment', [PaymentController::class, 'processPayment'])->name('payment.process');
 });
+
+Route::get('/aboutus', function () {
+    return view('aboutus');
+})->name('aboutus');

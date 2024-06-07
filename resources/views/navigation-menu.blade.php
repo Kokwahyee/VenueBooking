@@ -64,6 +64,11 @@
                         {{ __('Transaction') }}
                     </x-nav-link>
                 </div>
+                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                    <x-nav-link href="{{ route('aboutus') }}" :active="request()->routeIs('aboutus')" class="text-gray-300 hover:text-white">
+                        {{ __('About Us') }}
+                    </x-nav-link>
+                </div>
                 @else
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                     <x-nav-link href="{{ route('venue') }}" :active="request()->routeIs('venue')" class="text-gray-300 hover:text-white">
@@ -83,6 +88,11 @@
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                     <x-nav-link href="{{ route('transaction') }}" :active="request()->routeIs('transaction')" class="text-gray-300 hover:text-white">
                         {{ __('Transaction') }}
+                    </x-nav-link>
+                </div>
+                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                    <x-nav-link href="{{ route('aboutus') }}" :active="request()->routeIs('aboutus')" class="text-gray-300 hover:text-white">
+                        {{ __('About Us') }}
                     </x-nav-link>
                 </div>
                 @endif
@@ -199,11 +209,75 @@
 
     <!-- Responsive Navigation Menu -->
     <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden bg-gray-800">
-        <div class="pt-2 pb-3 space-y-1">
+        <div class="pt-2">
             <x-responsive-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')" class="text-gray-300 hover:text-white">
                 {{ __('Dashboard') }}
             </x-responsive-nav-link>
         </div>
+        @if(Auth::user() && Auth::user()->role === 'admin')
+                <div>
+                    <x-responsive-nav-link href="{{ route('venue') }}" :active="request()->routeIs('venue')" class="text-gray-300 hover:text-white">
+                        {{ __('Venue List') }}
+                    </x-responsive-nav-link>
+                </div>
+                <div>
+                    <x-responsive-nav-link href="{{ route('venue.manage') }}" :active="request()->routeIs('venue.manage')" class="text-gray-300 hover:text-white">
+                        {{ __('Venue Management') }}
+                    </x-responsive-nav-link>
+                </div>
+                <!-- Bookings Link -->
+                <div>
+                    <x-responsive-nav-link href="{{ route('booking.index') }}" :active="request()->routeIs('bookings.*')" class="text-gray-300 hover:text-white">
+                        {{ __('Bookings') }}
+                    </x-responsive-nav-link>
+                </div>
+                <div>
+                    <x-responsive-nav-link href="{{ route('request_changes.index') }}" :active="request()->routeIs('request_changes.*')" class="text-gray-300 hover:text-white">
+                        {{ __('Requests') }}
+                    </x-responsive-nav-link>
+                </div>
+                <div>
+                    <x-responsive-nav-link href="{{ route('reports.form') }}" :active="request()->routeIs('reports.generate')" class="text-gray-300 hover:text-white">
+                        {{ __('Reports') }}
+                    </x-responsive-nav-link>
+                </div>
+                <div>
+                    <x-responsive-nav-link href="{{ route('transaction') }}" :active="request()->routeIs('transaction')" class="text-gray-300 hover:text-white">
+                        {{ __('Transaction') }}
+                    </x-responsive-nav-link>
+                </div>
+                <div>
+                    <x-responsive-nav-link href="{{ route('aboutus') }}" :active="request()->routeIs('aboutus')" class="text-gray-300 hover:text-white">
+                        {{ __('About Us') }}
+                    </x-responsive-nav-link>
+                </div>
+                @else
+                <div>
+                    <x-responsive-nav-link href="{{ route('venue') }}" :active="request()->routeIs('venue')" class="text-gray-300 hover:text-white">
+                        {{ __('Venue List') }}
+                    </x-responsive-nav-link>
+                </div>
+                <div>
+                    <x-responsive-nav-link href="{{ route('request_changes.index') }}" :active="request()->routeIs('request')" class="text-gray-300 hover:text-white">
+                        {{ __('My Request') }}
+                    </x-responsive-nav-link>
+                </div>
+                <div>
+                    <x-responsive-nav-link href="{{ route('booking.index') }}" :active="request()->routeIs('bookings')" class="text-gray-300 hover:text-white">
+                        {{ __('My Bookings') }}
+                    </x-responsive-nav-link>
+                </div>
+                <div>
+                    <x-responsive-nav-link href="{{ route('transaction') }}" :active="request()->routeIs('transaction')" class="text-gray-300 hover:text-white">
+                        {{ __('Transaction') }}
+                    </x-responsive-nav-link>
+                </div>
+                <div>
+                    <x-responsive-nav-link href="{{ route('aboutus') }}" :active="request()->routeIs('aboutus')" class="text-gray-300 hover:text-white">
+                        {{ __('About Us') }}
+                    </x-responsive-nav-link>
+                </div>
+                @endif
 
         <!-- Responsive Settings Options -->
         <div class="pt-4 pb-1 border-t border-gray-700">
